@@ -50,7 +50,9 @@ private:
     unsigned int m_screenHeight;
 
     int* m_showLayers;
+    /* maitai
     int getLayerRenderOrder(t_ilm_layer id_array[]);
+    */
 
     void dumpScene();
 

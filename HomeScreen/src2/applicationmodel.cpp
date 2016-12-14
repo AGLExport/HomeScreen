@@ -52,11 +52,36 @@ ApplicationModel::Private::Private(ApplicationModel *parent)
         data.append(AppInfo(QStringLiteral("POI"), QStringLiteral("POINT OF\nINTEREST"), QStringLiteral("poi@0.1")));
     }
 }
+void ApplicationModel::changeLanguage(const QString &lang)
+{ //todo: use QT translator instead of hardcoded strings.
+    if(lang == "fr") {
+        d->data[0].setName("CLIMATISATION");
+        d->data[1].setName("NAVIGATION");
+        d->data[2].setName("TÉLÉPHONE");
+        d->data[3].setName("RADIO");
+        d->data[4].setName("MULTIMÉDIA");
+        d->data[5].setName("CONNEXIONS");
+        d->data[6].setName("TABLEAU DE\nBORD");
+        d->data[7].setName("PARAMÈTRES");
+        d->data[8].setName("POINT D'INTÉRÊT");
+    } else {
+        d->data[0].setName("HVAC");
+        d->data[1].setName("NAVIGATION");
+        d->data[2].setName("PHONE");
+        d->data[3].setName("RADIO");
+        d->data[4].setName("MULTIMEDIA");
+        d->data[5].setName("CONNECTIVITY");
+        d->data[6].setName("DASHBOARD");
+        d->data[7].setName("SETTINGS");
+        d->data[8].setName("POINT OF\nINTEREST");
+    }
+}
 
 ApplicationModel::ApplicationModel(QObject *parent)
     : QAbstractListModel(parent)
     , d(new Private(this))
 {
+    setObjectName("ApplicationModel");
 }
 
 ApplicationModel::~ApplicationModel()

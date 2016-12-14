@@ -16,6 +16,7 @@
  */
 
 import QtQuick 2.2
+import QtQuick.Controls 1.0
 
 MouseArea {
     id: root
@@ -32,6 +33,16 @@ MouseArea {
         anchors.fill: parent
         source: './images/Shortcut/HMI_Shortcut_%1_Active-01.png'.arg(root.name)
         opacity: 1.0 - icon.opacity
+    }
+    Label {
+        id: labelName
+        anchors.horizontalCenter: parent.horizontalCenter
+        horizontalAlignment: Text.AlignHCenter
+        y: 155
+        font.pixelSize: 20
+        font.family: "Roboto"
+        color: "white"
+        text: '%1'.arg(model.label)
     }
     states: [
         State {

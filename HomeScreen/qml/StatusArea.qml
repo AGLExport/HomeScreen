@@ -24,6 +24,62 @@ Item {
     id: root
     width: 295
     height: 218
+    function languageChanged(lang) {
+        if(lang === "fr") {
+            labelTime.text = Qt.formatTime(now, 'HH:mm').toUpperCase()
+            labelTemperature.text = '18°C'
+            switch(now.getDay()) {
+            case 1:
+                labelDay.text = 'LUNDI'
+                break
+            case 2:
+                labelDay.text = 'MARDI'
+                break
+            case 3:
+                labelDay.text = 'MERCREDI'
+                break
+            case 4:
+                labelDay.text = 'JEUDI'
+                break
+            case 5:
+                labelDay.text = 'VENDREDI'
+                break
+            case 6:
+                labelDay.text = 'SAMEDI'
+                break
+            case 7:
+                labelDay.text = 'DIMANCHE'
+                break
+            }
+
+        } else {
+            labelTime.text = Qt.formatTime(now, 'h:mm ap').toUpperCase()
+            labelTemperature.text = '64°F'
+            switch(now.getDay()) {
+            case 1:
+                labelDay.text = 'MONDAY'
+                break
+            case 2:
+                labelDay.text = 'TUESDAY'
+                break
+            case 3:
+                labelDay.text = 'WEDNESDAY'
+                break
+            case 4:
+                labelDay.text = 'THURSDAY'
+                break
+            case 5:
+                labelDay.text = 'FRIDAY'
+                break
+            case 6:
+                labelDay.text = 'SATURDAY'
+                break
+            case 7:
+                labelDay.text = 'SUNDAY'
+                break
+            }
+        }
+    }
 
     property date now: new Date
     Timer {
@@ -43,11 +99,13 @@ Item {
                 anchors.margins: 40
                 spacing: 0
                 Label {
+                    id: labelDay
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     text: Qt.formatDate(now, 'dddd').toUpperCase()
                     font.family: 'Roboto'
-                    font.pixelSize: 13
+//                    font.pixelSize: 13
+                    font.pixelSize: 18
                     color: 'white'
                     verticalAlignment:  Text.AlignVCenter
 //                    Rectangle {
@@ -60,6 +118,7 @@ Item {
 //                    }
                 }
                 Label {
+                    id: labelTime
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     text: Qt.formatTime(now, 'h:mm ap').toUpperCase()
@@ -77,6 +136,7 @@ Item {
                         source: './images/Weather/WeatherIcons_Rain-01.png'
                     }
                     Label {
+                        id: labelTemperature
                         text: '64°F'
                         color: 'white'
                         font.family: 'Helvetica'

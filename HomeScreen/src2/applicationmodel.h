@@ -30,7 +30,7 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
-
+    void changeLanguage(const QString &lang);
 private:
     class Private;
     Private *d;

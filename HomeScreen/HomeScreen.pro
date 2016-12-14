@@ -29,7 +29,8 @@ SOURCES += \
     src/statusbarwidget.cpp \
     src/applauncher.cpp \
     src/homescreencontrolinterface.cpp \
-    src/layouthandler.cpp
+    src/layouthandler.cpp \
+    src2/usermanagement.cpp
 
 HEADERS  += \
     src/mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS  += \
     src/statusbarwidget.h \
     src/applauncher.h \
     src/homescreencontrolinterface.h \
-    src/layouthandler.h
+    src/layouthandler.h \
+    src2/usermanagement.h
 
 FORMS    += \
     resources/mainwindow.ui \

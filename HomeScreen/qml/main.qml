@@ -36,7 +36,7 @@ Window {
         anchors.centerIn: parent
         width: 1080
         height: 1920
-        scale: 1.0
+        scale: 0.5
         source: './images/AGL_HMI_Background_NoCar-01.png'
 
         ColumnLayout {
@@ -59,6 +59,7 @@ Window {
 
             Home {
                 id: appLauncherAreaLauncher
+                objectName: "Home"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredHeight: 1920 - 218 - 215

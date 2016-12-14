@@ -56,6 +56,7 @@ public:
     friend QDBusArgument &operator <<(QDBusArgument &argument, const AppInfo &appInfo);
     friend const QDBusArgument &operator >>(const QDBusArgument &argument, AppInfo &appInfo);
 
+    void setName(const QString &name);
 private:
     class Private;
     QSharedDataPointer<Private> d;
