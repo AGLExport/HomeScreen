@@ -23,11 +23,13 @@ include(../ivi_layermanagement_api.pri)
 SOURCES += \
     src/main.cpp \
     src/homescreencontrolinterface.cpp \
-    src/layouthandler.cpp
+    src/layouthandler.cpp \
+    src2/usermanagement.cpp
 
 HEADERS  += \
     src/homescreencontrolinterface.h \
-    src/layouthandler.h
+    src/layouthandler.h \
+    src2/usermanagement.h
 
 OTHER_FILES += \
     README.md

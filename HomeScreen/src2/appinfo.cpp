@@ -108,6 +108,10 @@ QString AppInfo::name() const
 {
     return d->name;
 }
+void AppInfo::setName(const QString &name)
+{
+    d->name = name;
+}
 
 QString AppInfo::description() const
 {

@@ -29,21 +29,37 @@ Item {
         ListElement {
             name: 'Home'
             application: 'home@0.1'
+            label: 'HOME'
         }
         ListElement {
             name: 'Multimedia'
             application: 'mediaplayer@0.1'
+            label: 'MULTIMEDIA'
         }
         ListElement {
             name: 'HVAC'
             application: 'hvac@0.1'
+            label: 'HVAC'
         }
         ListElement {
             name: 'Navigation'
             application: 'navigation@0.1'
+            label: 'NAVIGATION'
         }
     }
-
+    function languageChanged(lang) {
+        if(lang === "fr") {
+            applicationModel.setProperty(0, "label", 'ACCEUIL')
+            applicationModel.setProperty(1, "label", 'MULTIMÉDIA')
+            applicationModel.setProperty(2, "label", 'CLIMATISATION')
+            applicationModel.setProperty(3, "label", 'NAVIGATION')
+        } else {
+            applicationModel.setProperty(0, "label", 'HOME')
+            applicationModel.setProperty(1, "label", 'MULTIMEDIA')
+            applicationModel.setProperty(2, "label", 'HVAC')
+            applicationModel.setProperty(3, "label", 'NAVIGATION')
+        }
+    }
     property int currentIndex: -1 // TODO: to be moved to whereever right
     property int pid: -1
 

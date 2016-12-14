@@ -29,12 +29,14 @@ Image {
         spacing: 0
         ShortcutArea {
             id: shortcutArea
+            objectName: "ShortcutArea"
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: 785
         }
         StatusArea {
             id: statusArea
+            objectName: "StatusArea"
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredWidth: 295
