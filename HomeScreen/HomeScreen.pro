@@ -14,7 +14,7 @@
 
 TEMPLATE = app
 TARGET = HomeScreen
-QT = qml quick widgets dbus
+QT = qml quick widgets dbus websockets
 CONFIG += c++11
 
 include(../interfaces/interfaces.pri)

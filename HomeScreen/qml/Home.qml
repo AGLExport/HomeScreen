@@ -40,6 +40,17 @@ Item {
         source: './images/B14-90.png'
         visible: false
     }
+    Image {
+        id: visa
+        width: 200
+        height: 124
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        source: './images/visa.png'
+        visible: false
+    }
     Item {
         id: hello
         anchors.horizontalCenter: parent.horizontalCenter
@@ -83,6 +94,9 @@ Item {
         sign90.visible = show
     }
 
+    function showVisa(show) {
+        visa.visible = show
+    }
     GridView {
         anchors.centerIn: parent
         width: cellHeight * 3

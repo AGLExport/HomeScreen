@@ -109,7 +109,7 @@ WindowManager::~WindowManager()
 #endif
     delete mp_layoutAreaToSurfaceIdAssignment;
 }
-/* maitai
+#ifndef COMPIL_MAITAI
 int WindowManager::getLayerRenderOrder(t_ilm_layer id_array[])
 {
     int i, j;
@@ -122,7 +122,7 @@ int WindowManager::getLayerRenderOrder(t_ilm_layer id_array[])
 
     return j;
 }
-*/
+#endif
 void WindowManager::dumpScene()
 {
     qDebug("\n");
