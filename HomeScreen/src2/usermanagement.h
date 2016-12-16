@@ -16,6 +16,7 @@
 //"ccExpYear":"19","description":"Original description","ccExpMonth":"01","groups":[],"last_name":"Jensen"
 //"ccNumber":"123-1111-2222-3333-1212","house_identifier":"ForgeRock","phone":"+1 408 555 1862","name":"bjensen"
 //"state":"CA","fax":"+1 408 555 1862","common_name":"Barbara Jensen","postal_code":"94105","first_name":"Barbara","keytoken":"EB:7C:23:C6:21:BF"}
+//"graphActions":"Install App,Update Software,Exceed 100 Kph,Open Trunk,View Online"
 struct User {
     QString postal_address;
     QPointF loc;
@@ -40,6 +41,7 @@ struct User {
     QString postal_code;
     QString first_name;
     QString keytoken;
+    QStringList graphActions;
 };
 
 class UserManagement : public QObject

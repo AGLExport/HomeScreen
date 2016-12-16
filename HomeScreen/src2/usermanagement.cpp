@@ -28,7 +28,7 @@ void UserManagement::setUser(const User &user)
     QMetaObject::invokeMethod(home, "languageChanged");
     QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
-    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, true));
+    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, !user.graphActions.contains("Exceed 100 Kph")));
     if(user.ccNumberMasked.isEmpty())
         QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, false), Q_ARG(QVariant, ""));
     else
@@ -105,6 +105,7 @@ void UserManagement::onTextMessageReceived(QString message)
             user.loc.setX(temp.at(0).toDouble());
             user.loc.setY(temp.at(1).toDouble());
         }
+        user.graphActions = map["graphActions"].toString().split(",");
         user.country = map["country"].toString();
         user.mail = map["mail"].toString();
         user.city = map["city"].toString();
@@ -203,7 +204,7 @@ void UserManagement::onServerNewConnection()
 }
 void UserManagement::processTextMessage(QString message)
 {
-    QString clientDetails_1 = "{\"postal_address\":\"201 Mission Street\",\"loc\":\"37.7914374,-122.3950694\""
+    QString clientDetails_1 = "{\"postal_address\":\"201 Mission Street\",\"loc\":\"37.7914374,-122.3950694\",\"graphActions\":\"Install App,Update Software,Exceed 100 Kph,Open Trunk,View Online\""
                               ",\"country\":\"USA\",\"mail\":\"bjensen@example.com\",\"city\":\"San Francisco\",\"graphEmail\":"
                               "\"bjensen@example.com\",\"graphPreferredLanguage\":\"en\",\"ccNumberMasked\":\"-111\",\"ccExpYear\""
                               ":\"19\",\"ccExpMonth\":\"01\",\"description\":\"Original description\",\"groups\":[],\"last_name\":\""
