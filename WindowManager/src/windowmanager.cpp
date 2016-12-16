@@ -47,17 +47,22 @@ WindowManager::WindowManager(QObject *parent) :
     mp_layoutAreaToSurfaceIdAssignment(0),
     m_currentLayout(-1),
     m_screenId(0), // use screen "0"
-    m_screenWidth(0),
-    m_screenHeight(0),
+#ifndef COMPIL_MAITAI
     m_appLayers(),
-    m_pending_to_show(-1)
+    m_pending_to_show(-1),
+#endif
+    m_screenWidth(0),
+    m_screenHeight(0)
+
 {
+#ifndef COMPIL_MAITAI
     m_showLayers = new t_ilm_layer[WINDOWMANAGER_LAYER_NUM];
 
     m_showLayers[0] = 0; /* POPUP is not shown by default */
     m_showLayers[1] = 0; /* HOMESCREEN_OVERLAY is not shown by default */
     m_showLayers[2] = 0; /* APPLICATIONS is not shown by default */
     m_showLayers[3] = WINDOWMANAGER_LAYER_HOMESCREEN; /* HOMESCREEN is shwon by default */
+#endif
 
     qDebug("-=[WindowManager]=-");
 }
@@ -107,6 +112,7 @@ WindowManager::~WindowManager()
     delete mp_layoutAreaToSurfaceIdAssignment;
 }
 
+#ifndef COMPIL_MAITAI
 int WindowManager::getLayerRenderOrder(t_ilm_layer id_array[])
 {
     int i, j;
@@ -119,6 +125,7 @@ int WindowManager::getLayerRenderOrder(t_ilm_layer id_array[])
 
     return j;
 }
+#endif
 
 void WindowManager::dumpScene()
 {
@@ -347,6 +354,7 @@ void WindowManager::updateScreen()
     ilm_layerSetRenderOrder(WINDOWMANAGER_LAYER_POPUP, pArray, length);
     ilm_commitChanges();
 #endif
+#ifndef COMPIL_MAITAI
     if (m_pending_to_show != -1) {
         showAppLayer(m_pending_to_show);
     } else {
@@ -356,6 +364,7 @@ void WindowManager::updateScreen()
         ilm_displaySetRenderOrder(m_screenId, renderOrder, num_layers);
         ilm_commitChanges();
     }
+#endif
 }
 
 #ifdef HAVE_IVI_LAYERMANAGEMENT_API
@@ -784,7 +793,9 @@ void WindowManager::showAppLayer(int pid)
     }
 
     /* clear pending flag */
+#ifndef COMPIL_MAITAI
     m_pending_to_show = -1;
+#endif
 
 #ifdef HAVE_IVI_LAYERMANAGEMENT_API
     /* search layer id for application to show */
