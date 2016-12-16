@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+DEFINES += COMPIL_MAITAI
+
 TEMPLATE = app
 TARGET = WindowManager
 QT = core dbus

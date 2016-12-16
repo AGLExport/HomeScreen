@@ -53,7 +53,6 @@ private:
     t_ilm_layer* m_showLayers;
     QMap<pid_t, t_ilm_layer> m_appLayers;
     int getLayerRenderOrder(t_ilm_layer* id_array);
-
     void createNewLayer(const int layerId);
 
     t_ilm_layer getAppLayerID(const pid_t pid);
