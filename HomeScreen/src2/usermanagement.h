@@ -11,6 +11,11 @@
 #ifndef REAL_SERVER
 #include <QtWebSockets/QWebSocketServer>
 #endif
+//{"postal_address":"201 Mission Street","loc":"37.7914374,-122.3950694","country":"USA","mail":"bjensen@example.com",
+//"city":"San Francisco","graphEmail":"bjensen@example.com","graphPreferredLanguage":"en","ccNumberMasked":"************1212",
+//"ccExpYear":"19","description":"Original description","ccExpMonth":"01","groups":[],"last_name":"Jensen"
+//"ccNumber":"123-1111-2222-3333-1212","house_identifier":"ForgeRock","phone":"+1 408 555 1862","name":"bjensen"
+//"state":"CA","fax":"+1 408 555 1862","common_name":"Barbara Jensen","postal_code":"94105","first_name":"Barbara","keytoken":"EB:7C:23:C6:21:BF"}
 struct User {
     QString postal_address;
     QPointF loc;
@@ -21,8 +26,8 @@ struct User {
     QString graphPreferredLanguage;
     QString ccNumberMasked;
     QString ccExpYear;
-    QString ccExpMonth;
     QString description;
+    QString ccExpMonth;
     QStringList groups;
     QString last_name;
     QString ccNumber;
@@ -30,8 +35,8 @@ struct User {
     QString phone;
     QString name;
     QString state;
-    QString common_name;
     QString fax;
+    QString common_name;
     QString postal_code;
     QString first_name;
     QString keytoken;
