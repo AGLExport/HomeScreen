@@ -29,7 +29,10 @@ void UserManagement::setUser(const User &user)
     QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, true));
-    QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, true), Q_ARG(QVariant, "---- ---- ---- " + user.ccNumberMasked));
+    if(user.ccNumberMasked.isEmpty())
+        QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, false), Q_ARG(QVariant, ""));
+    else
+        QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, true), Q_ARG(QVariant, user.ccNumberMasked));
     const QString welcome = QString("%1").arg(user.graphPreferredLanguage == "fr" ? "Bonjour " : "Hello") + " ";
     QMetaObject::invokeMethod(home, "showHello", Q_ARG(QVariant, welcome + user.first_name));
 }
