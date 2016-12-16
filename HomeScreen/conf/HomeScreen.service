@@ -1,7 +1,7 @@
 [Unit]
 Description=AGL reference HomeScreen
-Requires=dbus.service afm-user-daemon.service InputEventManager.service HomeScreenAppFrameworkBinderAGL.service
-After=dbus.service afm-user-daemon.service InputEventManager.service HomeScreenAppFrameworkBinderAGL.service
+Requires=dbus.service afm-user-daemon.service InputEventManager.service HomeScreenAppFrameworkBinderAGL.service agl-identity-agent.service
+After=dbus.service afm-user-daemon.service InputEventManager.service HomeScreenAppFrameworkBinderAGL.service agl-identity-agent.service
 ConditionKernelCommandLine=!agl.nogfx
 
 [Service]
