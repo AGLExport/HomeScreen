@@ -51,6 +51,17 @@ Item {
         anchors.topMargin: 20
         source: './images/visa.png'
         visible: false
+        Label {
+            id: cardNumber
+            anchors.top: parent.bottom
+            anchors.topMargin: 10
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment:  Text.AlignHCenter
+            color: "white"
+            text: "111"
+            font.pixelSize: 20
+            font.family: "Roboto"
+        }
     }
     Item {
         id: hello
@@ -62,7 +73,7 @@ Item {
             id: helloText
             anchors.centerIn: parent
             color: "white"
-            text: "Hello José!"
+            text: ""
             font.pixelSize: 40
             font.family: "Roboto"
             SequentialAnimation on font.letterSpacing {
@@ -95,8 +106,9 @@ Item {
         sign90.visible = show
     }
 
-    function showVisa(show) {
+    function showVisa(show, num) {
         visa.visible = show
+        cardNumber.text = num;
     }
     GridView {
         anchors.centerIn: parent

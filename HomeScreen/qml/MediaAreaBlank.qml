@@ -23,7 +23,11 @@ Image {
     source: './images/Utility_Logo_Background-01.png'
 
     Image {
+        objectName: "Logo_colour"
         anchors.centerIn: parent
         source: './images/Utility_Logo_Colour-01.png'
+        function setImage(imagePath) {
+            source = imagePath
+        }
     }
 }

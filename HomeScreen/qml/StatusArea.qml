@@ -144,6 +144,7 @@ Item {
                     }
                 }
             }
+            Component.onCompleted: root.languageChanged("en")
         }
         ColumnLayout {
             id: icons
