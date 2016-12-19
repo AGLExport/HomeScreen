@@ -25,7 +25,8 @@ class ApplicationModel::Private
 {
 public:
     Private(ApplicationModel *parent);
-
+    QList<QList<int> > orders;
+    QList<AppInfo> originalData;
 private:
     ApplicationModel *q;
 public:
@@ -51,29 +52,59 @@ ApplicationModel::Private::Private(ApplicationModel *parent)
         data.append(AppInfo(QStringLiteral("Settings"), QStringLiteral("SETTINGS"), QStringLiteral("settings@0.1")));
         data.append(AppInfo(QStringLiteral("POI"), QStringLiteral("POINT OF\nINTEREST"), QStringLiteral("poi@0.1")));
     }
+    originalData = data;
+    QList<int> o;
+    o << 5 << 4 << 3 << 7 << 8  << 0 << 2 << 1 << 6;
+    orders.append(o);
+    o.clear();
+    o << 0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 ;
+    orders.append(o);
+    o.clear();
+    o << 3 << 8 << 1 << 0 << 2 << 7 << 5 << 4 << 6;
+    orders.append(o);
+    o.clear();
+    o << 2 << 7 << 3 << 8 << 4 << 0 << 1 << 5 << 6;
+    orders.append(o);
+    o.clear();
+    o << 2 << 7 << 3 << 8 << 4 << 0 << 1 << 5 << 6;
+    orders.append(o);
+    o.clear();
+    o << 6 << 0 << 2 << 1 << 7 << 3 << 5 << 4 << 8;
+    orders.append(o);
 }
+void ApplicationModel::changeOrder(const int &hash)
+{
+    int order = qAbs(hash) % 7;
+    QList<int> o = d->orders.at(order);
+    QList<AppInfo> newData;
+    for(int i = 0; i < o.size(); ++i) {
+        newData.append(d->originalData.at(o.at(i)));
+    }
+    d->data = newData;
+}
+
 void ApplicationModel::changeLanguage(const QString &lang)
 { //todo: use QT translator instead of hardcoded strings.
     if(lang == "fr") {
-        d->data[0].setName("CLIMATISATION");
-        d->data[1].setName("NAVIGATION");
-        d->data[2].setName("TÉLÉPHONE");
-        d->data[3].setName("RADIO");
-        d->data[4].setName("MULTIMÉDIA");
-        d->data[5].setName("CONNEXIONS");
-        d->data[6].setName("TABLEAU DE\nBORD");
-        d->data[7].setName("PARAMÈTRES");
-        d->data[8].setName("POINT D'INTÉRÊT");
+        d->originalData[0].setName("CLIMATISATION");
+        d->originalData[1].setName("NAVIGATION");
+        d->originalData[2].setName("TÉLÉPHONE");
+        d->originalData[3].setName("RADIO");
+        d->originalData[4].setName("MULTIMÉDIA");
+        d->originalData[5].setName("CONNEXIONS");
+        d->originalData[6].setName("TABLEAU DE\nBORD");
+        d->originalData[7].setName("PARAMÈTRES");
+        d->originalData[8].setName("POINT D'INTÉRÊT");
     } else {
-        d->data[0].setName("HVAC");
-        d->data[1].setName("NAVIGATION");
-        d->data[2].setName("PHONE");
-        d->data[3].setName("RADIO");
-        d->data[4].setName("MULTIMEDIA");
-        d->data[5].setName("CONNECTIVITY");
-        d->data[6].setName("DASHBOARD");
-        d->data[7].setName("SETTINGS");
-        d->data[8].setName("POINT OF\nINTEREST");
+        d->originalData[0].setName("HVAC");
+        d->originalData[1].setName("NAVIGATION");
+        d->originalData[2].setName("PHONE");
+        d->originalData[3].setName("RADIO");
+        d->originalData[4].setName("MULTIMEDIA");
+        d->originalData[5].setName("CONNECTIVITY");
+        d->originalData[6].setName("DASHBOARD");
+        d->originalData[7].setName("SETTINGS");
+        d->originalData[8].setName("POINT OF\nINTEREST");
     }
 }
 

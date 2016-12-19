@@ -1,5 +1,4 @@
 #include "usermanagement.h"
-#include <QApplication>
 #include <QDebug>
 #include <QtCore/QJsonDocument>
 #include <QByteArray>
@@ -11,6 +10,10 @@ UserManagement::UserManagement(QObject *root) : QObject()
     statusArea = root->findChild<QObject *>("StatusArea");
     this->appModel = home->findChild<ApplicationModel *>("ApplicationModel");
     sequence = 0;
+    isRed = false;
+    connect(&timerRed, SIGNAL(timeout()), this, SLOT(slot_turnOffRed()));
+    timerRed.setSingleShot(true);
+    timerRed.setInterval(3000);
 #ifdef REAL_SERVER
     connectWebsockets();
 #else
@@ -23,8 +26,11 @@ UserManagement::UserManagement(QObject *root) : QObject()
 }
 void UserManagement::setUser(const User &user)
 {
+    int hash = qHash(user.name + user.first_name);
+    timerRed.stop();
     appModel->changeLanguage(user.graphPreferredLanguage);
-    QMetaObject::invokeMethod(logo, "setImage", Q_ARG(QVariant, "./images/Utility_Logo_Colour-01.png"));
+    appModel->changeOrder(hash);
+    slot_turnOffRed();
     QMetaObject::invokeMethod(home, "languageChanged");
     QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
@@ -35,7 +41,16 @@ void UserManagement::setUser(const User &user)
         QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, true), Q_ARG(QVariant, user.ccNumberMasked));
     const QString welcome = QString("%1").arg(user.graphPreferredLanguage == "fr" ? "Bonjour " : "Hello") + " ";
     QMetaObject::invokeMethod(home, "showHello", Q_ARG(QVariant, welcome + user.first_name));
+    QMetaObject::invokeMethod(home, "changeFlag", Q_ARG(QVariant, user.graphPreferredLanguage == "fr" ? "./images/french_flag.png" : "./images/us_flag.png"));
 }
+void UserManagement::slot_turnOffRed()
+{
+    if(!isRed)
+        return;
+    QMetaObject::invokeMethod(logo, "setImage", Q_ARG(QVariant, "./images/Utility_Logo_Colour-01.png"));
+    isRed = false;
+}
+
 void UserManagement::connectWebsockets()
 {
 #ifdef REAL_SERVER
@@ -82,7 +97,10 @@ void UserManagement::onTextMessageReceived(QString message)
     }
     QVariantMap map  = list.at(2).toMap();
     if(list.first().toInt() == 5) {
-        QMetaObject::invokeMethod(logo, "setImage", Q_ARG(QVariant, "./images/Utility_Logo_Red-01.png"));
+        if(!isRed)
+            QMetaObject::invokeMethod(logo, "setImage", Q_ARG(QVariant, "./images/Utility_Logo_Red-01.png"));
+        isRed = true;
+        timerRed.start();
         map = map["data"].toMap();
         if(map["eventName"].toString() == "login") {
             //qWarning()<<"login received in client";

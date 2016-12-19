@@ -42,6 +42,16 @@ Item {
         visible: false
     }
     Image {
+        id: flagLanguage
+        scale: 0.7
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        source: './images/us_flag.png'
+        visible: true
+    }
+    Image {
         id: visa
         width: 200
         height: 124
@@ -68,12 +78,12 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
-        visible: false
+        visible: true
         Text {
             id: helloText
             anchors.centerIn: parent
             color: "white"
-            text: ""
+            text: "No Authenticated User"
             font.pixelSize: 40
             font.family: "Roboto"
             SequentialAnimation on font.letterSpacing {
@@ -81,10 +91,12 @@ Item {
                 loops: 1;
                 NumberAnimation { from: 0; to: 50; easing.type: Easing.InQuad; duration: 3000 }
                 onRunningChanged: {
-                    if(running)
+                    if(running) {
                         hello.visible = true
-                    else
-                        hello.visible = false
+                    } else {
+                        helloText.opacity = 1
+                        helloText.font.letterSpacing = 0
+                    }
                 }
             }
 
@@ -110,6 +122,10 @@ Item {
         visa.visible = show
         cardNumber.text = num;
     }
+    function changeFlag(flagImage) {
+        flagLanguage.source = flagImage
+    }
+
     GridView {
         anchors.centerIn: parent
         width: cellHeight * 3
@@ -122,6 +138,7 @@ Item {
             width: 320
             height: 320
             Image {
+                id: appImage
                 anchors.fill: parent
                 source: './images/HMI_AppLauncher_%1_%2-01.png'.arg(model.icon).arg(pressed ? 'Active' : 'Inactive')
                 Label {
@@ -135,6 +152,7 @@ Item {
                     text: '%1'.arg(model.name)
                     function myChangeLanguage() {
                         text = '%1'.arg(model.name)
+                        appImage.source = './images/HMI_AppLauncher_%1_%2-01.png'.arg(model.icon).arg(pressed ? 'Active' : 'Inactive')
                     }
                     Component.onCompleted: {
                         root.languageChanged.connect(myChangeLanguage)

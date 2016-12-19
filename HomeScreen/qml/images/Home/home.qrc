@@ -21,5 +21,7 @@
         <file>HMI_AppLauncher_Settings_Inactive-01.png</file>
         <file>B14-90.png</file>
         <file>visa.png</file>
+        <file>french_flag.png</file>
+        <file>us_flag.png</file>
     </qresource>
 </RCC>

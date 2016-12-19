@@ -50,14 +50,32 @@ Item {
     function languageChanged(lang) {
         if(lang === "fr") {
             applicationModel.setProperty(0, "label", 'ACCEUIL')
-            applicationModel.setProperty(1, "label", 'MULTIMÉDIA')
-            applicationModel.setProperty(2, "label", 'CLIMATISATION')
-            applicationModel.setProperty(3, "label", 'NAVIGATION')
+
+            applicationModel.setProperty(2, "label", 'MULTIMÉDIA')
+            applicationModel.setProperty(2, "name", 'Multimedia')
+            applicationModel.setProperty(2, "application", 'mediaplayer@0.1')
+
+            applicationModel.setProperty(3, "label", 'CLIMATISATION')
+            applicationModel.setProperty(3, "name", 'HVAC')
+            applicationModel.setProperty(3, "application", 'hvac@0.1')
+
+            applicationModel.setProperty(1, "label", 'NAVIGATION')
+            applicationModel.setProperty(1, "name", 'Navigation')
+            applicationModel.setProperty(1, "application", 'navigation@0.1')
         } else {
             applicationModel.setProperty(0, "label", 'HOME')
+
             applicationModel.setProperty(1, "label", 'MULTIMEDIA')
+            applicationModel.setProperty(1, "name", 'Multimedia')
+            applicationModel.setProperty(1, "application", 'mediaplayer@0.1')
+
             applicationModel.setProperty(2, "label", 'HVAC')
+            applicationModel.setProperty(2, "name", 'HVAC')
+            applicationModel.setProperty(2, "application", 'hvac@0.1')
+
             applicationModel.setProperty(3, "label", 'NAVIGATION')
+            applicationModel.setProperty(3, "name", 'Navigation')
+            applicationModel.setProperty(3, "application", 'navigation@0.1')
         }
     }
     property int currentIndex: -1 // TODO: to be moved to whereever right
