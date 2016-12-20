@@ -37,6 +37,11 @@ void UserManagement::slot_disconnect()
     QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, false));
     QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, false), Q_ARG(QVariant, ""));
     QMetaObject::invokeMethod(home, "changeFlag", Q_ARG(QVariant, "./images/us_flag.png"));
+    QMetaObject::invokeMethod(home, "setUser", Q_ARG(QVariant, ""), Q_ARG(QVariant, ""));
+    QVariantList list;
+    list << 2 << QString().setNum(++sequence) << "agl-identity-agent/logout" << true;
+    listToJson(list, &data);
+    slot_sendData();
 }
 
 void UserManagement::setUser(const User &user)
@@ -50,6 +55,21 @@ void UserManagement::setUser(const User &user)
     QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, !user.graphActions.contains("Exceed 100 Kph")));
+    QStringList t;
+    foreach(const QString &s, user.graphActions) {
+        if(!s.contains("Exceed"))
+            t.append(s);
+    }
+    QString type = user.policy;
+    if(user.graphPreferredLanguage == "fr") {
+        if(type == "Owner")
+            type = "Propriétaire";
+        else if(type == "Driver")
+            type = "Conducteur";
+        else if(type == "Maintainer")
+            type = "Maintenance";
+    }
+    QMetaObject::invokeMethod(home, "setUser", Q_ARG(QVariant, type), Q_ARG(QVariant, QVariant::fromValue(t)));
     if(user.ccNumberMasked.isEmpty())
         QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, false), Q_ARG(QVariant, ""));
     else
@@ -160,6 +180,7 @@ void UserManagement::onTextMessageReceived(QString message)
         user.postal_code = map["postal_code"].toString();
         user.first_name = map["first_name"].toString();
         user.keytoken = map["keytoken"].toString();
+        user.policy = map["graphPolicies"].toString();
         setUser(user);
     }
 }
@@ -243,14 +264,14 @@ void UserManagement::processTextMessage(QString message)
                               ":\"19\",\"ccExpMonth\":\"01\",\"description\":\"Original description\",\"groups\":[],\"last_name\":\""
                               "Jensen\",\"ccNumber\":\"111-2343-1121-111\",\"house_identifier\":\"ForgeRock\",\"phone\":\""
                               "+1 408 555 1862\",\"name\":\"bjensen\",\"state\":\"CA\",\"common_name\":\"Barbara Jensen\",\"fax\":\""
-                              "+1 408 555 1862\",\"postal_code\":\"94105\",\"first_name\":\"Barbara\",\"keytoken\":\"a123456\"}";
+                              "+1 408 555 1862\",\"postal_code\":\"94105\",\"first_name\":\"Barbara\",\"keytoken\":\"a123456\",\"graphPolicies\":\"Driver\"}";
     QString clientDetails_2 = "{\"postal_address\":\"201 Mission Street\",\"loc\":\"37.7914374,-122.3950694\""
                               ",\"country\":\"USA\",\"mail\":\"bjensen@example.com\",\"city\":\"San Francisco\",\"graphEmail\":"
                               "\"bjensen@example.com\",\"graphPreferredLanguage\":\"fr\",\"ccNumberMasked\":\"-222\",\"ccExpYear\""
                               ":\"19\",\"ccExpMonth\":\"01\",\"description\":\"Original description\",\"groups\":[],\"last_name\":\""
                               "Jensen\",\"ccNumber\":\"111-2343-1121-111\",\"house_identifier\":\"ForgeRock\",\"phone\":\""
                               "+1 408 555 1862\",\"name\":\"bjensen\",\"state\":\"CA\",\"common_name\":\"Barbara Jensen\",\"fax\":\""
-                              "+1 408 555 1862\",\"postal_code\":\"94105\",\"first_name\":\"José\",\"keytoken\":\"a123456\"}";
+                              "+1 408 555 1862\",\"postal_code\":\"94105\",\"first_name\":\"José\",\"keytoken\":\"a123456\",\"graphPolicies\":\"Maintainer\"}";
     QString clientDetails = clientDetails_1;
     if(sequence % 2 == 1)
         clientDetails = clientDetails_2;

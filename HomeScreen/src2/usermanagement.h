@@ -1,7 +1,7 @@
 #ifndef USERMANAGEMENT_H
 #define USERMANAGEMENT_H
 
-#define REAL_SERVER "ws://localhost:1212/api?token=hello"
+//#define REAL_SERVER "ws://localhost:1212/api?token=hello"
 
 #include <QObject>
 #include "applicationmodel.h"
@@ -36,6 +36,7 @@ struct User {
     QString first_name;
     QString keytoken;
     QStringList graphActions;
+    QString policy;
 };
 
 class UserManagement : public QObject

@@ -24,5 +24,9 @@
         <file>french_flag.png</file>
         <file>us_flag.png</file>
         <file>Logout-01.png</file>
+        <file>Update Software.png</file>
+        <file>Open Trunk.png</file>
+        <file>Install App.png</file>
+        <file>View Online.png</file>
     </qresource>
 </RCC>

@@ -18,6 +18,8 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import Home 1.0
 
 Item {
@@ -128,6 +130,19 @@ Item {
     function changeFlag(flagImage) {
         flagLanguage.source = flagImage
     }
+    function setUser(type, auts) {
+        if(type === '') {
+            authorisations.visible = false
+        } else {
+            authorisations.visible = true
+            labelUserType.text = type
+            myModel.clear()
+            for (var i=0; i<auts.length; i++) {
+                if(auts[i] !== '')
+                    myModel.append({"name": auts[i]})
+            }
+        }
+    }
 
     GridView {
         anchors.centerIn: parent
@@ -178,6 +193,54 @@ Item {
             }
         }
     }
+    ListModel {
+        id: myModel
+        ListElement {
+            name: 'Install App'
+        }
+        ListElement {
+            name: 'Open Trunk'
+        }
+        ListElement {
+            name: 'Update Software'
+        }
+        ListElement {
+            name: 'View Online'
+        }
+    }
+    Item {
+        id: authorisations
+        anchors.fill: parent
+        visible: false
+        GridLayout {
+            id: gridAut
+            columns: 2
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.bottomMargin: 50
+            anchors.leftMargin: 20
+            Repeater {
+                model: myModel
+                Image {
+                    source: './images/' + model.name + '.png'
+                    width: sourceSize.width
+                    height: sourceSize.height
+                    visible: true
+                }
+            }
+        }
+        Label {
+            id: labelUserType
+            anchors.bottom: gridAut.top
+            anchors.bottomMargin: 10
+            anchors.left: gridAut.left
+            color: "white"
+            text: "Owner"
+            font.pixelSize: 30
+            font.family: "Roboto"
+        }
+    }
+
     Image {
         id: logout
         width: sourceSize.width
