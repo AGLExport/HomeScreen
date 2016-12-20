@@ -119,8 +119,14 @@ Item {
         animation2.running = true;
     }
 
-    function showSign90(show) {
+    function showSign90(show, lang) {
         sign90.visible = show
+        if(show) {
+            if(lang === 'fr')
+                sign90.source = './images/B14-90.png'
+            else
+                sign90.source = './images/B14-60.png'
+        }
     }
 
     function showVisa(show, num) {

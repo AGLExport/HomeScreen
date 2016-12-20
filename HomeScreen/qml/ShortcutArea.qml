@@ -115,9 +115,9 @@ Item {
         }
     }
     Component.onCompleted: {
-        root.currentIndex = 0
         appLauncherAreaLauncher.visible = true
         applicationArea.visible = false
         layoutHandler.hideAppLayer()
+        launcher.current = ''
     }
 }

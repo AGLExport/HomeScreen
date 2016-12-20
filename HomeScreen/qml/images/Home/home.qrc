@@ -19,7 +19,6 @@
         <file>HMI_AppLauncher_Radio_Inactive-01.png</file>
         <file>HMI_AppLauncher_Settings_Active-01.png</file>
         <file>HMI_AppLauncher_Settings_Inactive-01.png</file>
-        <file>B14-90.png</file>
         <file>visa.png</file>
         <file>french_flag.png</file>
         <file>us_flag.png</file>
@@ -28,5 +27,7 @@
         <file>Open Trunk.png</file>
         <file>Install App.png</file>
         <file>View Online.png</file>
+        <file>B14-60.png</file>
+        <file>B14-90.png</file>
     </qresource>
 </RCC>

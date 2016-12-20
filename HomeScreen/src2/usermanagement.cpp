@@ -54,7 +54,7 @@ void UserManagement::setUser(const User &user)
     QMetaObject::invokeMethod(home, "languageChanged");
     QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
-    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, !user.graphActions.contains("Exceed 100 Kph")));
+    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, !user.graphActions.contains("Exceed 100 Kph")), Q_ARG(QVariant, user.graphPreferredLanguage));
     QStringList t;
     foreach(const QString &s, user.graphActions) {
         if(!s.contains("Exceed"))
@@ -258,7 +258,7 @@ void UserManagement::onServerNewConnection()
 }
 void UserManagement::processTextMessage(QString message)
 {
-    QString clientDetails_1 = "{\"postal_address\":\"201 Mission Street\",\"loc\":\"37.7914374,-122.3950694\",\"graphActions\":\"Install App,Update Software,Exceed 100 Kph,Open Trunk,View Online\""
+    QString clientDetails_1 = "{\"postal_address\":\"201 Mission Street\",\"loc\":\"37.7914374,-122.3950694\",\"graphActions\":\"Install App,Update Software,Open Trunk,View Online\""
                               ",\"country\":\"USA\",\"mail\":\"bjensen@example.com\",\"city\":\"San Francisco\",\"graphEmail\":"
                               "\"bjensen@example.com\",\"graphPreferredLanguage\":\"en\",\"ccNumberMasked\":\"-111\",\"ccExpYear\""
                               ":\"19\",\"ccExpMonth\":\"01\",\"description\":\"Original description\",\"groups\":[],\"last_name\":\""
