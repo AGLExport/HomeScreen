@@ -28,5 +28,6 @@
         <file>Open Trunk.png</file>
         <file>Install App.png</file>
         <file>View Online.png</file>
+        <file>sign.png</file>
     </qresource>
 </RCC>

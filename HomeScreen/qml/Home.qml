@@ -41,8 +41,20 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 20
-        source: './images/B14-90.png'
+        source: './images/sign.png'
         visible: false
+        Label {
+            id: speedLimit
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            horizontalAlignment:  Text.AlignHCenter
+            color: "black"
+            text: "50"
+            font.pixelSize: 90
+            font.family: "Roboto"
+            font.bold: true
+            visible: false
+        }
     }
     Image {
         id: flagLanguage
@@ -119,8 +131,17 @@ Item {
         animation2.running = true;
     }
 
-    function showSign90(show) {
+    function showSign90(show, speed, unit) {
         sign90.visible = show
+        if(show) {
+            if(speed.length > 2)
+                speedLimit.font.pixelSize = 60
+            else
+                speedLimit.font.pixelSize = 90
+            speedLimit.text = speed
+        }
+        sign90.source = './images/B14-90.png'
+        speedLimit.visible = false
     }
 
     function showVisa(show, num) {

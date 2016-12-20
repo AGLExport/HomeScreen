@@ -54,12 +54,22 @@ void UserManagement::setUser(const User &user)
     QMetaObject::invokeMethod(home, "languageChanged");
     QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
     QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, user.graphPreferredLanguage));
-    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, !user.graphActions.contains("Exceed 100 Kph")));
     QStringList t;
+    bool noSpeedLimit = true;
     foreach(const QString &s, user.graphActions) {
-        if(!s.contains("Exceed"))
+        if(!s.contains("Exceed")) {
             t.append(s);
+        } else {
+            noSpeedLimit = false;
+            QStringList speed = s.split(" ");
+            if(speed.size() == 3)
+                QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, true),
+                                          Q_ARG(QVariant, speed.at(1)), Q_ARG(QVariant, speed.at(2)));
+        }
     }
+    if(noSpeedLimit)
+        QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, false),
+                                  Q_ARG(QVariant, QString()), Q_ARG(QVariant, QString()));
     QString type = user.policy;
     if(user.graphPreferredLanguage == "fr") {
         if(type == "Owner")
