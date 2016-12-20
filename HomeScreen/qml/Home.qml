@@ -24,6 +24,7 @@ Item {
     id: root
     property int pid: -1
     signal languageChanged
+    signal disconnect
 
     Image {
         anchors.fill: parent
@@ -82,14 +83,15 @@ Item {
         Text {
             id: helloText
             anchors.centerIn: parent
-            color: "white"
-            text: "No Authenticated User"
+            color: 'white'
+            text: 'No Authenticated User'
             font.pixelSize: 40
-            font.family: "Roboto"
+            font.family: 'Roboto'
             SequentialAnimation on font.letterSpacing {
                 id: animation1
                 loops: 1;
                 NumberAnimation { from: 0; to: 50; easing.type: Easing.InQuad; duration: 3000 }
+                running: false
                 onRunningChanged: {
                     if(running) {
                         hello.visible = true
@@ -103,6 +105,7 @@ Item {
             SequentialAnimation on opacity {
                 id: animation2
                 loops: 1;
+                running: false
                 NumberAnimation { from: 1; to: 0; duration: 2600 }
                 PauseAnimation { duration: 400 }
             }
@@ -173,6 +176,35 @@ Item {
                     console.warn("app cannot be launched!")
                 }
             }
+        }
+    }
+    Image {
+        id: logout
+        width: sourceSize.width
+        height: sourceSize.height
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.bottomMargin: 10
+        anchors.rightMargin: 20
+        source: './images/Logout-01.png'
+        visible: true
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                rotateLogout.start()
+                disconnect()
+                helloText.text= 'No Authenticated User'
+
+            }
+        }
+        RotationAnimator {
+            id: rotateLogout
+            target: logout;
+            from: 0;
+            to: 360;
+            loops: 1
+            duration: 500
+            running: false
         }
     }
 }

@@ -62,6 +62,7 @@ public slots:
     void slot_timerTest();
 #endif
     void slot_turnOffRed();
+    void slot_disconnect();
 private:
     QObject *home;
     QObject *shortcutArea;

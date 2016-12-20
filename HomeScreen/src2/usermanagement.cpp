@@ -5,6 +5,8 @@
 UserManagement::UserManagement(QObject *root) : QObject()
 {
     home = root->findChild<QObject *>("Home");
+    QObject::connect(home, SIGNAL(disconnect()),
+                         this, SLOT(slot_disconnect()));
     logo = root->findChild<QObject *>("Logo_colour");
     shortcutArea = root->findChild<QObject *>("ShortcutArea");
     statusArea = root->findChild<QObject *>("StatusArea");
@@ -24,6 +26,19 @@ UserManagement::UserManagement(QObject *root) : QObject()
     launchServer();
 #endif
 }
+void UserManagement::slot_disconnect()
+{
+    appModel->changeOrder(-1);
+    timerRed.stop();
+    slot_turnOffRed();
+    QMetaObject::invokeMethod(home, "languageChanged");
+    QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, "en"));
+    QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, "en"));
+    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, false));
+    QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, false), Q_ARG(QVariant, ""));
+    QMetaObject::invokeMethod(home, "changeFlag", Q_ARG(QVariant, "./images/us_flag.png"));
+}
+
 void UserManagement::setUser(const User &user)
 {
     int hash = qHash(user.name + user.first_name);
@@ -293,6 +308,10 @@ void UserManagement::slot_timerTest()
 {
     if(!pSocket)
         return;
+    if(sequence > 3) {
+        timerTest.stop();
+        return;
+    }
     pSocket->sendTextMessage("[5,\"agl-identity-agent/event\",{\"event\":\"agl-identity-agent\/event\",\"data\":{\"eventName\":\"incoming\",\"accountid\":\"D2:D4:71:0D:B5:F1\",\"nickname\":\"D2:D4:71:0D:B5:F1\"},\"jtype\":\"afb-event\"}]");
     pSocket->sendTextMessage("[5,\"agl-identity-agent/event\",{\"event\":\"agl-identity-agent\/event\",\"data\":{\"eventName\":\"login\",\"accountid\":\"null\"},\"jtype\":\"afb-event\"}]");
 }

@@ -23,5 +23,6 @@
         <file>visa.png</file>
         <file>french_flag.png</file>
         <file>us_flag.png</file>
+        <file>Logout-01.png</file>
     </qresource>
 </RCC>
