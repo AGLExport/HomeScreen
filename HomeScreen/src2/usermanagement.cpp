@@ -34,7 +34,7 @@ void UserManagement::slot_disconnect()
     QMetaObject::invokeMethod(home, "languageChanged");
     QMetaObject::invokeMethod(shortcutArea, "languageChanged", Q_ARG(QVariant, "en"));
     QMetaObject::invokeMethod(statusArea, "languageChanged", Q_ARG(QVariant, "en"));
-    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, false));
+    QMetaObject::invokeMethod(home, "showSign90", Q_ARG(QVariant, false), Q_ARG(QVariant, "en"));
     QMetaObject::invokeMethod(home, "showVisa", Q_ARG(QVariant, false), Q_ARG(QVariant, ""));
     QMetaObject::invokeMethod(home, "changeFlag", Q_ARG(QVariant, "./images/us_flag.png"));
     QMetaObject::invokeMethod(home, "setUser", Q_ARG(QVariant, ""), Q_ARG(QVariant, ""));
