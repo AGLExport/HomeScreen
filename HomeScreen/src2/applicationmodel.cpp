@@ -74,6 +74,10 @@ ApplicationModel::Private::Private(ApplicationModel *parent)
 }
 void ApplicationModel::changeOrder(const int &hash)
 {
+    if(hash < 0) {
+        d->data = d->originalData;
+        return;
+    }
     int order = qAbs(hash) % 7;
     QList<int> o = d->orders.at(order);
     QList<AppInfo> newData;

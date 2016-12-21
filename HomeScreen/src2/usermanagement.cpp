@@ -28,6 +28,7 @@ UserManagement::UserManagement(QObject *root) : QObject()
 }
 void UserManagement::slot_disconnect()
 {
+    appModel->changeLanguage("us");
     appModel->changeOrder(-1);
     timerRed.stop();
     slot_turnOffRed();
