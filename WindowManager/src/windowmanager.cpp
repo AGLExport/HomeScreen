@@ -316,6 +316,13 @@ void WindowManager::configureAppSurface(pid_t pid, t_ilm_surface surface, t_ilm_
 	const int APP_WIDTH  = SCREEN_WIDTH;
 	const int APP_HEIGHT = (SCREEN_HEIGHT - TOPAREA_HEIGHT - MEDIAAREA_HEIGHT);
 	int dest_left,dest_top,dest_width,dest_height;
+
+#if 1
+		dest_width = width;
+		dest_height = height;
+		dest_left = (APP_WIDTH - dest_width) / 2;
+		dest_top = (APP_HEIGHT - dest_height) / 2 + TOPAREA_HEIGHT;
+#else
 	double sx,sy;
 	
 	//スケーリング係数を計算
@@ -338,7 +345,7 @@ void WindowManager::configureAppSurface(pid_t pid, t_ilm_surface surface, t_ilm_
 		dest_left = (APP_WIDTH - dest_width) / 2;
 		dest_top = (APP_HEIGHT - dest_height) / 2 + TOPAREA_HEIGHT;
 	}
-	
+#endif
     ilm_surfaceSetDestinationRectangle(surface,
                                        dest_left,
                                        dest_top,
