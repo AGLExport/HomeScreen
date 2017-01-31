@@ -313,11 +313,42 @@ void WindowManager::configureAppSurface(pid_t pid, t_ilm_surface surface, t_ilm_
     const int MEDIAAREA_X = 0;
     const int MEDIAAREA_Y = SCREEN_HEIGHT - MEDIAAREA_HEIGHT;
 
+	const int APP_WIDTH  = SCREEN_WIDTH;
+	const int APP_HEIGHT = (SCREEN_HEIGHT - TOPAREA_HEIGHT - MEDIAAREA_HEIGHT);
+	int dest_left,dest_top,dest_width,dest_height;
+	double sx,sy;
+	
+	//スケーリング係数を計算
+	sx = double(APP_WIDTH) / double(width);
+	sy = double(APP_HEIGHT) / double(height);
+	
+	if (sx > sy)
+	{
+		//横の拡大率が大きいので、縦を規準にサイズを調整
+		dest_width = width * APP_HEIGHT / height;
+		dest_height = height * APP_HEIGHT / height;
+		dest_left = (APP_WIDTH - dest_width) / 2;
+		dest_top = (APP_HEIGHT - dest_height) / 2 + TOPAREA_HEIGHT;
+	}
+	else
+	{
+		//縦の拡大率が大きいので、横のサイズを規準に調整	
+		dest_width = width * APP_WIDTH / width;
+		dest_height = height * APP_WIDTH / width;
+		dest_left = (APP_WIDTH - dest_width) / 2;
+		dest_top = (APP_HEIGHT - dest_height) / 2 + TOPAREA_HEIGHT;
+	}
+	
     ilm_surfaceSetDestinationRectangle(surface,
-                                       0,
-                                       TOPAREA_HEIGHT,
-                                       SCREEN_WIDTH,
-                                       SCREEN_HEIGHT - TOPAREA_HEIGHT - MEDIAAREA_HEIGHT);
+                                       dest_left,
+                                       dest_top,
+                                       dest_width,
+                                       dest_height);
+//    ilm_surfaceSetDestinationRectangle(surface,
+//                                       0,
+//                                       TOPAREA_HEIGHT,
+//                                       SCREEN_WIDTH,
+//                                       SCREEN_HEIGHT - TOPAREA_HEIGHT - MEDIAAREA_HEIGHT);
     ilm_surfaceSetSourceRectangle(surface, 0, 0, width, height);
     ilm_surfaceSetOpacity(surface, 1.0);
     ilm_surfaceSetVisibility(surface, ILM_TRUE); /* Hack to avoid blank screen when switch apps */
