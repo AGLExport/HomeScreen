@@ -513,7 +513,7 @@ void WindowManager::surfaceCallbackFunction_non_static(t_ilm_surface surface,
         surfaceVisibilityChanged(surface, surfaceProperties->visibility);
 
 		//入力デバイスのフォーカスを設定
-		//ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
+		ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
 		
         updateScreen();
     }
@@ -571,7 +571,7 @@ void WindowManager::surfaceCallbackFunction_non_static(t_ilm_surface surface,
                 
                 
 				//入力デバイスのフォーカスを設定
-				//ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
+				ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
                 
                 ilm_commitChanges();
             }
