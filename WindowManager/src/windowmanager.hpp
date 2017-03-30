@@ -25,6 +25,7 @@
 
 #ifdef HAVE_IVI_LAYERMANAGEMENT_API
 #include <ilm/ilm_control.h>
+#include <ilm/ilm_input.h>
 #endif
 class WindowManager : public QObject
 {

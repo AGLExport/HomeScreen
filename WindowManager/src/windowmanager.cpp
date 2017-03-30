@@ -325,13 +325,13 @@ void WindowManager::configureAppSurface(pid_t pid, t_ilm_surface surface, t_ilm_
 #else
 	double sx,sy;
 	
-	//ÉXÉPÅ[ÉäÉìÉOåWêîÇåvéZ
+	//„Çπ„Ç±„Éº„É™„É≥„Ç∞‰øÇÊï∞„ÇíË®àÁÆó
 	sx = double(APP_WIDTH) / double(width);
 	sy = double(APP_HEIGHT) / double(height);
 	
 	if (sx > sy)
 	{
-		//â°ÇÃägëÂó¶Ç™ëÂÇ´Ç¢ÇÃÇ≈ÅAècÇãKèÄÇ…ÉTÉCÉYÇí≤êÆ
+		//Ê®™„ÅÆÊã°Â§ßÁéá„ÅåÂ§ß„Åç„ÅÑ„ÅÆ„Åß„ÄÅÁ∏¶„ÇíË¶èÊ∫ñ„Å´„Çµ„Ç§„Ç∫„ÇíË™øÊï¥
 		dest_width = width * APP_HEIGHT / height;
 		dest_height = height * APP_HEIGHT / height;
 		dest_left = (APP_WIDTH - dest_width) / 2;
@@ -339,7 +339,7 @@ void WindowManager::configureAppSurface(pid_t pid, t_ilm_surface surface, t_ilm_
 	}
 	else
 	{
-		//ècÇÃägëÂó¶Ç™ëÂÇ´Ç¢ÇÃÇ≈ÅAâ°ÇÃÉTÉCÉYÇãKèÄÇ…í≤êÆ	
+		//Á∏¶„ÅÆÊã°Â§ßÁéá„ÅåÂ§ß„Åç„ÅÑ„ÅÆ„Åß„ÄÅÊ®™„ÅÆ„Çµ„Ç§„Ç∫„ÇíË¶èÊ∫ñ„Å´Ë™øÊï¥	
 		dest_width = width * APP_WIDTH / width;
 		dest_height = height * APP_WIDTH / width;
 		dest_left = (APP_WIDTH - dest_width) / 2;
@@ -359,7 +359,7 @@ void WindowManager::configureAppSurface(pid_t pid, t_ilm_surface surface, t_ilm_
     ilm_surfaceSetSourceRectangle(surface, 0, 0, width, height);
     ilm_surfaceSetOpacity(surface, 1.0);
     ilm_surfaceSetVisibility(surface, ILM_TRUE); /* Hack to avoid blank screen when switch apps */
-
+    
     ilm_commitChanges();
 }
 #endif
@@ -511,6 +511,10 @@ void WindowManager::surfaceCallbackFunction_non_static(t_ilm_surface surface,
     {
         qDebug("ILM_NOTIFICATION_VISIBILITY");
         surfaceVisibilityChanged(surface, surfaceProperties->visibility);
+
+		//ÂÖ•Âäõ„Éá„Éê„Ç§„Çπ„ÅÆ„Éï„Ç©„Éº„Ç´„Çπ„ÇíË®≠ÂÆö
+		//ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
+		
         updateScreen();
     }
     if (ILM_NOTIFICATION_OPACITY & mask)
@@ -564,6 +568,11 @@ void WindowManager::surfaceCallbackFunction_non_static(t_ilm_surface surface,
                 if (result != ILM_SUCCESS) {
                     qDebug("ilm_layerAddSurface(%d,%d) failed.", layer, surface);
                 }
+                
+                
+				//ÂÖ•Âäõ„Éá„Éê„Ç§„Çπ„ÅÆ„Éï„Ç©„Éº„Ç´„Çπ„ÇíË®≠ÂÆö
+				//ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
+                
                 ilm_commitChanges();
             }
         }
@@ -841,9 +850,13 @@ void WindowManager::showAppLayer(int pid)
     /* search layer id for application to show */
     QMap<pid_t, t_ilm_layer>::const_iterator i = m_appLayers.find(pid);
     QMap<pid_t, t_ilm_surface>::const_iterator j = m_appSurfaces.find(pid);
+    t_ilm_surface surface = j.value();
 
     if (i != m_appLayers.end()) {
         m_showLayers[2] = i.value();
+        
+        ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
+        
         qDebug("Found layer(%d) to show for app(pid=%d)", m_showLayers[2], pid);
     } else {
         /* check if this app is registered */
@@ -856,6 +869,9 @@ void WindowManager::showAppLayer(int pid)
         m_pending_to_show = pid;
         /* hide current app once, back to default screen */
         m_showLayers[2] = 0;
+        
+        ilm_setInputFocus(&surface, 1, ILM_INPUT_DEVICE_ALL, ILM_TRUE);
+        
         qDebug("No layer to show for app(pid=%d)", pid);
     }
     t_ilm_layer renderOrder[WINDOWMANAGER_LAYER_NUM];

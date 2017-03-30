@@ -26,7 +26,7 @@ HEADERS += \
     src/windowmanager.hpp
 
 config_ivi_layermanagement_api {
-    LIBS += -lilmControl -lilmCommon
+    LIBS += -lilmControl -lilmCommon -lilmInput
 }
 
 OTHER_FILES += \
